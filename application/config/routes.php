@@ -54,6 +54,9 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 
+// rout halaman login 
 $route['login'] = 'auth/login';
+
+// route halaman registrasi
 $route['registration'] = 'auth/registration';
 $route['registration/proses'] = 'auth/registration/proses_register';
