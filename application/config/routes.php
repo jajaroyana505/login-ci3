@@ -55,7 +55,10 @@ $route['translate_uri_dashes'] = FALSE;
 
 
 // rout halaman login 
-$route['login'] = 'auth/login';
+$route['login'] = 'auth/login/index';
+
+// route halaman dashboard
+$route['dashboard'] = 'admin/dashboard';
 
 // route halaman registrasi
 $route['registration'] = 'auth/registration';
