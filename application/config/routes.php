@@ -60,6 +60,10 @@ $route['login'] = 'auth/login/index';
 // route halaman dashboard
 $route['dashboard'] = 'admin/dashboard';
 
+// route halaman pegawa
+$route['pegawai'] = 'admin/pegawai/index';
+$route['tambah-pegawai'] = 'admin/pegawai/create';
+
 // route halaman registrasi
 $route['registration'] = 'auth/registration';
 $route['registration/proses'] = 'auth/registration/proses_register';

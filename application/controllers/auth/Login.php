@@ -29,7 +29,7 @@ class Login extends CI_Controller
                     // jika benar alihkan ke halaman dashboard
 
                     // bikin redirect ke halaman dashboard
-                    echo "password benar";
+                    redirect(base_url('dashboard'));
                 } else {
                     // jika password tidak sama kemabalikan ke halaman login dan berikan pesan kesalahan
                     $this->session->set_flashdata('failed', 'Password yang anda masukan salah!'); // membuat pesan kesalahan
