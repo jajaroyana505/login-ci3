@@ -23,5 +23,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
 </head>
+<style>
+    .bg-img {
+        background-image: url("<?= base_url('assets/img/bg.jpg') ?>");
+        /* background-repeat: no-repeat; */
+        background-size: contain;
+    }
 
-<body class="bg-gradient-primary">
+    .card {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+</style>
+
+<body class="bg-gradient-primary bg-img">

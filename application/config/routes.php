@@ -56,14 +56,35 @@ $route['translate_uri_dashes'] = FALSE;
 
 // rout halaman login 
 $route['login'] = 'auth/login/index';
+$route['logout'] = 'auth/login/logout';
 
 // route halaman dashboard
 $route['dashboard'] = 'admin/dashboard';
 
-// route halaman pegawa
+// route halaman pegawai
 $route['pegawai'] = 'admin/pegawai/index';
 $route['tambah-pegawai'] = 'admin/pegawai/create';
+$route['hapus-pegawai/(:num)'] = 'admin/pegawai/delete/$1';
+$route['api-hapus-pegawai/(:num)'] = 'admin/pegawai/delete_api/$1';
+$route['edit-pegawai/(:num)'] = 'admin/pegawai/edit/$1';
+$route['detail-pegawai/(:num)'] = 'admin/pegawai/detail/$1';
 
+
+// route halaman jabatan
+$route['jabatan'] = 'admin/jabatan';
+$route['tambah-jabatan'] = 'admin/jabatan/create';
+$route['edit-jabatan/(:num)'] = 'admin/jabatan/edit/$1';
 // route halaman registrasi
 $route['registration'] = 'auth/registration';
 $route['registration/proses'] = 'auth/registration/proses_register';
+
+// route halaman user
+$route['user'] = 'admin/user/index';
+$route['tambah-user'] = 'admin/user/create';
+
+
+// route penilaian
+$route['penilaian'] = 'admin/penilaian/index';
+$route['penilaian-pegawai/(:num)'] = 'admin/penilaian/penilaian_pegawai/$1';
+$route['penilaian-simpan'] = 'admin/penilaian/create';
+$route['penilaian-detail/(:num)'] = 'admin/penilaian/detail/$1';

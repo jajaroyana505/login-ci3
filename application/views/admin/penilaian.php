@@ -1,6 +1,6 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
-    <a class="btn btn-primary" href="<?= base_url('tambah-pegawai') ?>">Tambah pegawai</a>
+    <!-- <a class="btn btn-primary" href="<?= base_url('tambah-pegawai') ?>">Tambah pegawai</a> -->
     <?php
     if ($this->session->flashdata('success')) {
     ?>
@@ -30,7 +30,7 @@
     ?>
     <div class="card mt-2">
         <div class="card-header">
-            Daftar Pegawai
+            Penilain Pegawai
         </div>
         <div class="card-body">
             <table class="table">
@@ -40,13 +40,17 @@
                         <th scope="col">NIP</th>
                         <th scope="col">Nama</th>
                         <th scope="col">Jabatan</th>
-                        <th scope="col">Email</th>
+                        <th scope="col">Satatus penilaian</th>
                         <th scope="col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <pre>
+                        <?php
+                        // var_dump($pegawai);
+                        ?>
+                    </pre>
                     <?php
-
                     $i = 1;
                     foreach ($pegawai as $pgw) {
                     ?>
@@ -55,12 +59,30 @@
                             <td><?= $pgw['nip'] ?></td>
                             <td><?= $pgw['nama'] ?></td>
                             <td><?= $pgw['nama_jabatan'] ?></td>
-                            <td><?= $pgw['email'] ?></td>
                             <td>
-                                <a href="<?= base_url('detail-pegawai/' . $pgw['id']) ?>" class="btn btn-info">Detail</a>
-                                <a href="<?= base_url('edit-pegawai/' . $pgw['id']) ?>" class="btn btn-warning">Edit</a>
-                                <!-- <a href="<?= base_url('hapus-pegawai/' . $pgw['id']) ?>" class="btn btn-danger">Hapus</a> -->
-                                <a onclick="hapus(<?= $pgw['id'] ?>)" href="#" class="btn btn-danger">Hapus</a>
+                                <?php
+                                if ($pgw['nilai'] != null) {
+                                ?>
+                                    <span class="badge badge-success">Sudah di nilai</span>
+                                <?php
+                                } else {
+                                ?>
+                                    <span class="badge badge-warning">Belum di nilai</span>
+
+
+                                <?php
+                                }
+                                ?>
+                            </td>
+                            <td>
+                                <a href="<?= base_url('penilaian-pegawai/' . $pgw['id_pegawai']) ?>" class="btn btn-primary">Nilai</a>
+                                <?php
+                                if ($pgw['nilai'] != null) {
+                                ?>
+                                    <a href="<?= base_url('penilaian-detail/' . $pgw['id_pegawai']) ?>" class="btn btn-info">Hasil</a>
+                                <?php
+                                }
+                                ?>
                             </td>
                         </tr>
                     <?php
@@ -75,22 +97,22 @@
 
 
 <script>
-    function hapus(id) {
-        if (confirm("apakah kamu yakin ingin menghapus data dengan id = " + id)) {
-            $.ajax({
-                url: "<?= base_url('api-hapus-pegawai/') ?>" + id,
-                type: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    alert(response.message)
-                    location.reload();
-                },
-            })
-        } else {
-            alert("data batal di hapus")
+    // function hapus(id) {
+    //     if (confirm("apakah kamu yakin ingin menghapus data dengan id = " + id)) {
+    //         $.ajax({
+    //             url: "<?= base_url('api-hapus-pegawai/') ?>" + id,
+    //             type: 'GET',
+    //             dataType: 'json',
+    //             success: function(response) {
+    //                 alert(response.message)
+    //                 location.reload();
+    //             },
+    //         })
+    //     } else {
+    //         alert("data batal di hapus")
 
-        }
+    //     }
 
 
-    }
+    // }
 </script>

@@ -50,7 +50,7 @@
                     data-dismiss="modal">
                     Cancel
                 </button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
+                <a class="btn btn-primary" href="<?= base_url('logout') ?>">Logout</a>
             </div>
         </div>
     </div>
@@ -72,6 +72,13 @@
 <!-- Page level custom scripts -->
 <script src="<?php echo base_url('assets/admin/') ?>js/demo/chart-area-demo.js"></script>
 <script src="<?php echo base_url('assets/admin/') ?>js/demo/chart-pie-demo.js"></script>
+
+<script src="<?php echo base_url('assets/admin/') ?>vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="<?php echo base_url('assets/admin/') ?>vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function() {});
+    $('#data-user').DataTable();
+</script>
 </body>
 
 </html>

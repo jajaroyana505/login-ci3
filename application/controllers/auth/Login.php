@@ -26,7 +26,14 @@ class Login extends CI_Controller
                 $password_hash_user = $data_user->password;
                 // cek password yang di inputkan dari formulir sama atau tidak dengan password yang ada di database
                 if (password_verify($password, $password_hash_user)) {
-                    // jika benar alihkan ke halaman dashboard
+                    // jika benar set session dan alihkan ke halaman dashboard
+
+
+                    $this->session->set_userdata([
+                        "id" => $data_user->id,
+                        "nama" => $data_user->nama,
+                        "email" => $data_user->email,
+                    ]);
 
                     // bikin redirect ke halaman dashboard
                     redirect(base_url('dashboard'));
@@ -47,5 +54,11 @@ class Login extends CI_Controller
             $this->load->view('auth/login');
             $this->load->view('auth/footer');
         }
+    }
+
+    public function logout()
+    {
+        $this->session->sess_destroy();
+        redirect(base_url('login'));
     }
 }
