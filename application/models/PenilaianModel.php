@@ -34,6 +34,15 @@ class PenilaianModel extends CI_Model
         $this->db->from('penilaian');
         $this->db->where('nip_pegawai', "$nip_pegawai");
         $this->db->join('kriteria', 'kriteria.kode = penilaian.kode_kriteria');
+        $this->db->join('keterangan', 'keterangan.kode_kriteria = kriteria.kode', 'left');
+        return $this->db->get();
+    }
+
+    public function getAvarageByNip($nip_pegawai)
+    {
+        $this->db->select_avg("nilai");
+        $this->db->from("penilaian");
+        $this->db->where('nip_pegawai', "$nip_pegawai");
         return $this->db->get();
     }
 }

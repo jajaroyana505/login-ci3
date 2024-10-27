@@ -75,7 +75,7 @@
                                 ?>
                             </td>
                             <td>
-                                <a href="<?= base_url('penilaian-pegawai/' . $pgw['id_pegawai']) ?>" class="btn btn-primary">Nilai</a>
+                                <a href="<?= base_url('penilaian-pegawai/' . $pgw['id_pegawai']) ?>" class="btn btn-primary <?= $pgw['nilai'] == null ? "" : "disabled"; ?>">Nilai</a>
                                 <?php
                                 if ($pgw['nilai'] != null) {
                                 ?>

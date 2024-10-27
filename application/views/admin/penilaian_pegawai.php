@@ -1,69 +1,69 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-6">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
             <div class="card shadow">
                 <div class="card-header">
                     Detail Pegawai
                 </div>
                 <div class="card-body">
+                    <div class="row ">
+                        <div class="col-md-2">
+                            <img src="<?= base_url('assets/uploads/' . $pegawai['img']) ?>" alt="ini foto profile" class="img-fluid">
+                        </div>
+                        <div class="col-md-8">
+                            <table class="table">
+                                <tr>
+                                    <td>NIP </td>
+                                    <td>:</td>
+                                    <th><?= $pegawai['nip'] ?></th>
+                                </tr>
+                                <tr>
+                                    <td>Nama Lengkap</td>
+                                    <td>:</td>
+                                    <th><?= $pegawai['nama'] ?></th>
+                                </tr>
+                                <tr>
+                                    <td>Jenisa Kelamin </td>
+                                    <td>:</td>
+                                    <th><?= $pegawai['jk'] ?></th>
+                                </tr>
+                                <tr>
+                                    <td>Tempat, Tgl Lahir</td>
+                                    <td>:</td>
+                                    <th><?= $pegawai['tmp_lahir'] ?>, <?= $pegawai['tgl_lahir'] ?></th>
+                                </tr>
+                                <tr>
+                                    <td>Jabatan :</td>
+                                    <td>:</td>
+                                    <th><?= $pegawai['nama_jabatan'] ?></th>
+                                </tr>
+                                <tr>
+                                    <td>Email </td>
+                                    <td>:</td>
+                                    <th><?= $pegawai['email'] ?></th>
+                                </tr>
+                                <tr>
+                                    <td>No. Telepon </td>
+                                    <td>:</td>
+                                    <th><?= $pegawai['no_tlp'] ?></th>
+                                </tr>
+                                <tr>
+                                    <td>Alamat </td>
+                                    <td>:</td>
+                                    <th><?= $pegawai['alamat'] ?></th>
+                                </tr>
 
-                    <table class="table">
-                        <tr>
-                            <td>NIP </td>
-                            <td>:</td>
-                            <th><?= $pegawai['nip'] ?></th>
-                        </tr>
-                        <tr>
-                            <td>Nama Lengkap</td>
-                            <td>:</td>
-                            <th><?= $pegawai['nama'] ?></th>
-                        </tr>
-                        <tr>
-                            <td>Jenisa Kelamin </td>
-                            <td>:</td>
-                            <th><?= $pegawai['jk'] ?></th>
-                        </tr>
-                        <tr>
-                            <td>Tempat, Tgl Lahir</td>
-                            <td>:</td>
-                            <th><?= $pegawai['tmp_lahir'] ?>, <?= $pegawai['tgl_lahir'] ?></th>
-                        </tr>
-                        <tr>
-                            <td>Jabatan :</td>
-                            <td>:</td>
-                            <th><?= $pegawai['nama_jabatan'] ?></th>
-                        </tr>
-                        <tr>
-                            <td>Email </td>
-                            <td>:</td>
-                            <th><?= $pegawai['email'] ?></th>
-                        </tr>
-                        <tr>
-                            <td>No. Telepon </td>
-                            <td>:</td>
-                            <th><?= $pegawai['no_tlp'] ?></th>
-                        </tr>
-                        <tr>
-                            <td>Alamat </td>
-                            <td>:</td>
-                            <th><?= $pegawai['alamat'] ?></th>
-                        </tr>
-                        <tr>
-                            <td>Foto </td>
-                            <td>:</td>
-                            <th>
-                                <img width="200" src="<?= base_url('assets/uploads/' . $pegawai['img']) ?>" alt="ini foto profile" class="img-thumbnail">
-                            </th>
-                        </tr>
 
-                    </table>
+                            </table>
+                        </div>
+                    </div>
+
 
                 </div>
             </div>
         </div>
 
-        <div class="col-md-12 mt-5">
-            <h1>Penilaian</h1>
+        <div class="col-md-12 ">
             <pre>
                 <?php
                 // var_dump($kriteria);
@@ -77,10 +77,12 @@
                 // for ($j = 0; $j < 5; $j++) {
                 foreach ($kriteria as $krt) {
                 ?>
-                    <div class="card shadow mb-4">
+                    <div class="card shadow mb-4 border">
                         <div class="card-header">
-                            <h3 class="font-weight-bold"><?= $krt['nama_kriteria'] ?></h3>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente nulla cumque recusandae excepturi qui perferendis.</p>
+                            <blockquote class="blockquote">
+                                <p class="mb-0"><?= $krt['nama_kriteria'] ?></p>
+                                <footer class="blockquote-footer">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni, consectetur.</footer>
+                            </blockquote>
                         </div>
                         <div class="card-body">
                             Keterangan Nilai :
@@ -118,6 +120,15 @@
                 <?php
                 }
                 ?>
+
+                <div class="card">
+                    <div class="card-header">
+                        Catatan
+                    </div>
+                    <div class="card-body">
+                        <textarea class="form-control" rows="5" name="catatan" id=""></textarea>
+                    </div>
+                </div>
 
                 <button class="btn btn-primary " type="submit">Simpan</button>
             </form>

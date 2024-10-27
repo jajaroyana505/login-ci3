@@ -92,6 +92,12 @@ class Penilaian extends CI_Controller
             // Panggil fungsi batch insert di model
             $this->PenilaianModel->insert_batch($data);
 
+            // simpan catatan penilaian pegawai
+            $this->db->insert('catatan', [
+                "nip_pegawai" =>  $nip_pegawai[1],
+                "text" => $this->input->post("catatan")
+            ]);
+
             // Redirect setelah berhasil simpan
             redirect(base_url('admin/penilaian'));
         } else {
@@ -111,14 +117,156 @@ class Penilaian extends CI_Controller
         $this->load->model('PenilaianModel');
         $data_pegawai = $this->PegawaiModel->getByid($id_pegawai)->row_array();
         $data_nilai = $this->PenilaianModel->getAllByNip($data_pegawai['nip'])->result_array();
+
+        $grouped_data = [];
+
+        // Loop untuk mengelompokkan data berdasarkan 'kode' dan 'nama_kriteria'
+        foreach ($data_nilai as $row) {
+            $kode = $row['kode'];
+            $nama_kriteria = $row['nama_kriteria'];
+            $nilai = $row['nilai'];
+
+            // Jika kategori belum ada di array, tambahkan
+            if (!isset($grouped_data[$kode])) {
+                $grouped_data[$kode] = [
+                    'kode' => $kode,
+                    'nama_kriteria' => $nama_kriteria,
+                    'nilai' => $nilai,
+                    'keterangan' => []
+                ];
+            }
+
+            // Tambahkan keterangan ke dalam array keterangan untuk kategori tersebut
+            $grouped_data[$kode]['keterangan'][] = [
+                'id_ket' => $row['id_ket'],
+                'max' => $row['max'],
+                'min' => $row['min'],
+                'keterangan' => $row['keterangan']
+            ];
+        }
+
+        // Ubah array dari associative ke indexed
+        $grouped_data = array_values($grouped_data);
+
+        $avg = $this->db->select_avg('nilai')
+            ->where('nip_pegawai', $data_pegawai['nip'])
+            ->get('penilaian')
+            ->row_array()['nilai'];
+        $total = $this->db->select_sum('nilai')
+            ->where('nip_pegawai', $data_pegawai['nip'])
+            ->get('penilaian')
+            ->row_array()['nilai'];
+        $catatan = $this->db->get_where('catatan', ["nip_pegawai" => $data_pegawai['nip']])
+            ->row_array()['text'];
+
+
+        switch ($avg) {
+            case ($avg > 90):
+                $predikat = "A";
+                break;
+            case ($avg > 75):
+                $predikat = "B";
+                break;
+            case ($avg > 60):
+                $predikat = "C";
+                break;
+            case ($avg > 45):
+                $predikat = "D";
+                break;
+            default:
+                $predikat = "E";
+                break;
+        }
         $data = [
             'page' => 'Penilaian',
             'pegawai' => $data_pegawai,
-            'nilai' => $data_nilai,
+            'nilai' => $grouped_data,
+            'rata_rata' => $avg,
+            'jumlah' => $total,
+            'predikat' => $predikat,
+            'catatan' => $catatan,
         ];
 
         $this->load->view('admin/header', $data);
         $this->load->view('admin/penilaian_detail', $data);
         $this->load->view('admin/footer');
+    }
+
+    public function print($id_pegawai)
+    {
+        $this->load->model('PegawaiModel');
+        $this->load->model('PenilaianModel');
+        $data_pegawai = $this->PegawaiModel->getByid($id_pegawai)->row_array();
+        $data_nilai = $this->PenilaianModel->getAllByNip($data_pegawai['nip'])->result_array();
+
+        $grouped_data = [];
+
+        // Loop untuk mengelompokkan data berdasarkan 'kode' dan 'nama_kriteria'
+        foreach ($data_nilai as $row) {
+            $kode = $row['kode'];
+            $nama_kriteria = $row['nama_kriteria'];
+            $nilai = $row['nilai'];
+
+            // Jika kategori belum ada di array, tambahkan
+            if (!isset($grouped_data[$kode])) {
+                $grouped_data[$kode] = [
+                    'kode' => $kode,
+                    'nama_kriteria' => $nama_kriteria,
+                    'nilai' => $nilai,
+                    'keterangan' => []
+                ];
+            }
+
+            // Tambahkan keterangan ke dalam array keterangan untuk kategori tersebut
+            $grouped_data[$kode]['keterangan'][] = [
+                'id_ket' => $row['id_ket'],
+                'max' => $row['max'],
+                'min' => $row['min'],
+                'keterangan' => $row['keterangan']
+            ];
+        }
+
+        // Ubah array dari associative ke indexed
+        $grouped_data = array_values($grouped_data);
+
+        $avg = $this->db->select_avg('nilai')
+            ->where('nip_pegawai', $data_pegawai['nip'])
+            ->get('penilaian')
+            ->row_array()['nilai'];
+        $total = $this->db->select_sum('nilai')
+            ->where('nip_pegawai', $data_pegawai['nip'])
+            ->get('penilaian')
+            ->row_array()['nilai'];
+        $catatan = $this->db->get_where('catatan', ["nip_pegawai" => $data_pegawai['nip']])
+            ->row_array()['text'];
+
+
+        switch ($avg) {
+            case ($avg > 90):
+                $predikat = "A";
+                break;
+            case ($avg > 75):
+                $predikat = "B";
+                break;
+            case ($avg > 60):
+                $predikat = "C";
+                break;
+            case ($avg > 45):
+                $predikat = "D";
+                break;
+            default:
+                $predikat = "E";
+                break;
+        }
+        $data = [
+            'page' => 'Penilaian',
+            'pegawai' => $data_pegawai,
+            'nilai' => $grouped_data,
+            'rata_rata' => $avg,
+            'jumlah' => $total,
+            'predikat' => $predikat,
+            'catatan' => $catatan,
+        ];
+        $this->load->view("admin/blanko_print_penilain", $data);
     }
 }
